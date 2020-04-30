@@ -12,5 +12,10 @@ COPY rewrite.config /usr/local/tomcat/conf/Catalina/127.0.0.1/
 
 RUN echo -n $admin_pw > /opt/lucee/server/lucee-server/context/password.txt
 
+# https://github.com/lucee/lucee-dockerfiles/issues/61
+RUN sed \
+    -i 's~\(<Connector [^\>]*AJP/.*\)\( />\)~ \1 requiredSecret="false" \2 ~' \
+    '/usr/local/tomcat/conf/server.xml'
+
 # lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
 RUN /usr/local/tomcat/bin/prewarm.sh && /usr/local/tomcat/bin/prewarm.sh
