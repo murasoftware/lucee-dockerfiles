@@ -14,7 +14,7 @@ RUN echo -n $admin_pw > /opt/lucee/server/lucee-server/context/password.txt
 
 # https://github.com/lucee/lucee-dockerfiles/issues/61
 RUN sed \
-    -i 's~\(<Connector [^\>]*AJP/.*\)\( />\)~ \1 requiredSecret="false" \2 ~' \
+    -i 's~\(<Connector [^\>]*AJP/.*\)\( />\)~ \1 secretRequired="false" \2 ~' \
     '/usr/local/tomcat/conf/server.xml'
 
 # lucee first time startup; explodes lucee and installs bundles/extensions (prewarms twice due to additional bundle downloads)
